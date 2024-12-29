@@ -1,5 +1,4 @@
 #pragma once
-#define SIZE 5
 #include <iostream>
 
 using namespace std;
@@ -8,54 +7,22 @@ class Array
 {
 private:
 	int* array;
+	size_t size;
 	static int count;
 public:
-	Array() : Array(nullptr) {};
-	Array(int* array_S) : array{ new int[SIZE] }
-	{
-		count++;
-		if (array_S)
-		{
-			for (int i{ 0 }; i < SIZE; i++)
-			{
-				array[i] = array_S[i];
-			}
-		}
-	}
-	Array(Array&& array_S) : array{ array_S.array }
-	{
-		array_S.array = nullptr;
-		count++;
-	}
+	Array()noexcept : Array(nullptr, 1) {};
+	Array(int* array_S, size_t size_S);
+	explicit Array(int* array_S)noexcept : Array(array_S, 1) {};
+	explicit Array(size_t size_S)noexcept : Array(nullptr, size_S) {};
+	Array(Array&& array_S)noexcept;
+	Array(const Array& array_S)noexcept : array(array_S.array), size(array_S.size) { count++; }
 
-	const int* get_string()
-	{
-		return array;
-	}
-	void set_string(const int* array_S)
-	{
-		if (array)
-		{
-			delete[] array;
-		}
-		array = new int[SIZE];
-		for (int i{ 0 }; i < SIZE; i++)
-		{
-			array[i] = array_S[i];
-		}
-	}
+	const int* get_array() { return array; }
+	void set_array(const int* array_S);
 
+	void fill();
+	void print();
+	static int get_count() { return count; }
 
-	Array* sin_str(int& size);
-	void print(int& size);
-	static int get_count()
-	{
-		return count;
-	}
-
-	~Array()
-	{
-		count--;
-		delete[] array;
-	}
+	~Array();
 };

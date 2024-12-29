@@ -3,7 +3,7 @@
 int main()
 {
 	setlocale(LC_ALL, "rus");
-	Array* mas{ nullptr };
+	Array mas(2), mas2(3);
 	int choise = 0, size = 0;
 	enum MENU {
 		EXIT = 0,
@@ -21,13 +21,19 @@ int main()
 		switch (choise)
 		{
 		case SIN_STR:
-			mas = mas->sin_str(size);
+			cout << "Введите массив #1\n";
+			mas.fill();
+			cout << "Введите массив #2\n";
+			mas2.fill();
 			break;
 		case PRINT:
-			mas->print(size);
+			cout << "Массив #1\n";
+			mas.print();
+			cout << "Массив #2\n";
+			mas2.print();
 			break;
 		case COUNT_STRING:
-			printf("Кол-во массивов: %d\n", mas->get_count());
+			printf("Кол-во массивов: %d\n", mas.get_count());
 			break;
 		case EXIT:
 			break;
